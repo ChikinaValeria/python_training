@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
+import unittest
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException
 from selenium.webdriver.firefox.webdriver import WebDriver
 
-import unittest, time, re
 
 class TestAddGroup(unittest.TestCase):
     def setUp(self):
-        self.wd = WebDriver()
+        self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(60)
 
-    
     def test_add_group(self):
         wd = self.wd
         wd.get("http://localhost/addressbook/")
