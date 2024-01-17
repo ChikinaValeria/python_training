@@ -11,12 +11,12 @@ class TestAddGroup(unittest.TestCase):
     def open_home_page(self, wd):
         wd.get("http://localhost/addressbook/")
 
-    def login(self, wd):
+    def login(self, wd, username, password):
         wd.find_element('name', "user").clear()
-        wd.find_element('name', "user").send_keys("admin")
+        wd.find_element('name', "user").send_keys(username)
         wd.find_element('name', "pass").click()
         wd.find_element('name', "pass").clear()
-        wd.find_element('name', "pass").send_keys("secret")
+        wd.find_element('name', "pass").send_keys(password)
         wd.find_element('xpath', "//input[@value='Login']").click()
 
     def open_groups_page(self, wd):
@@ -48,7 +48,7 @@ class TestAddGroup(unittest.TestCase):
         #success = True
         wd = self.wd
         self.open_home_page(wd)
-        self.login(wd)
+        self.login(wd, "admin", "secret")
         self.open_groups_page(wd)
         self.create_group(wd)
         self.return_to_groups_page(wd)
