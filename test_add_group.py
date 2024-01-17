@@ -2,7 +2,7 @@
 import unittest
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException
-from selenium.webdriver.firefox.webdriver import WebDriver
+
 
 
 class TestAddGroup(unittest.TestCase):
