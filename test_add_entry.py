@@ -22,7 +22,8 @@ class TestAddEntry(unittest.TestCase):
         wd.find_element('xpath', "//input[@value='Login']").click()
 
 
-    def create_entry(self, wd, firstname, lastname, address, home, mobile, email, email2, byear, ayear):
+    def create_entry(self, wd, firstname, lastname, address, home, mobile, email, email2, byear, ayear, bmonth, aday,
+                     bday, amonth):
         #init entry creation
         wd.find_element('link text', "add new").click()
         #fill entry form
@@ -48,21 +49,21 @@ class TestAddEntry(unittest.TestCase):
         wd.find_element('name', "email2").clear()
         wd.find_element('name', "email2").send_keys(email2)
         wd.find_element('name', "bday").click()
-        Select(wd.find_element('name', "bday")).select_by_visible_text("1")
+        Select(wd.find_element('name', "bday")).select_by_visible_text(bday)
         wd.find_element('xpath', "//option[@value='1']").click()
         wd.find_element('name', "bmonth").click()
         wd.find_element('xpath', "//option[@value='-']").click()
         wd.find_element('name', "bmonth").click()
-        Select(wd.find_element('name', "bmonth")).select_by_visible_text("May")
+        Select(wd.find_element('name', "bmonth")).select_by_visible_text(bmonth)
         wd.find_element('xpath', "//option[@value='May']").click()
         wd.find_element('name', "byear").click()
         wd.find_element('name', "byear").clear()
         wd.find_element('name', "byear").send_keys(byear)
         wd.find_element('name', "aday").click()
-        Select(wd.find_element('name', "aday")).select_by_visible_text("16")
+        Select(wd.find_element('name', "aday")).select_by_visible_text(aday)
         wd.find_element('xpath', "//div[@id='content']/form/select[3]/option[18]").click()
         wd.find_element('name', "amonth").click()
-        Select(wd.find_element('name', "amonth")).select_by_visible_text("October")
+        Select(wd.find_element('name', "amonth")).select_by_visible_text(amonth)
         wd.find_element('xpath', "//div[@id='content']/form/select[4]/option[11]").click()
         wd.find_element('name', "ayear").click()
         wd.find_element('name', "ayear").clear()
@@ -80,10 +81,23 @@ class TestAddEntry(unittest.TestCase):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, password = "secret", username = "admin")
-        self.create_entry(wd, firstname = "Павел", lastname = "Петровский", address =  "Russia, Saint-Petersburg", home = "1234578", mobile = "8 921 921 92 92",
-                          email = "pavel@gmail.com", email2 = "pavel1@gmail.com", byear = "1985", ayear = "1985")
+        self.create_entry(wd, firstname="Павел", lastname="Петровский", address="Russia, Saint-Petersburg",
+                          home="1234578", mobile="8 921 921 92 92", email="pavel@gmail.com", email2="pavel1@gmail.com",
+                          byear="1985", ayear="1985", bmonth="May", aday="16", bday="1", amonth="October")
         self.return_to_the_entry_list(wd)
         self.logout(wd)
+
+
+    def test_add_almost_empty_entry(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, password = "secret", username = "admin")
+        self.create_entry(wd, firstname="", lastname="", address="",
+                          home="", mobile="", email="", email2="",
+                          byear="", ayear="", bmonth="-", aday="", bday="", amonth="-")
+        self.return_to_the_entry_list(wd)
+        self.logout(wd)
+
 
 
     def is_element_present(self, how, what):
