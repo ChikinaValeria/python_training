@@ -21,20 +21,19 @@ class TestAddEntry(unittest.TestCase):
         wd.find_element('name', "pass").send_keys("secret")
         wd.find_element('xpath', "//input[@value='Login']").click()
 
-    def test_add_entry(self):
-        wd = self.wd
-        self.open_home_page(wd)
-        self.login(wd)
+    def open_entry_page(self, wd):
         wd.find_element('link text', "add new").click()
-        wd.find_element('name',"firstname").click()
-        wd.find_element('name',"firstname").clear()
-        wd.find_element('name',"firstname").send_keys(u"Павел")
-        wd.find_element('name',"middlename").click()
-        wd.find_element('name',"middlename").clear()
-        wd.find_element('name',"middlename").send_keys(u"Арсений")
-        wd.find_element('name',"lastname").click()
-        wd.find_element('name',"lastname").clear()
-        wd.find_element('name',"lastname").send_keys(u"Петровский")
+
+    def create_entry(self, wd):
+        wd.find_element('name', "firstname").click()
+        wd.find_element('name', "firstname").clear()
+        wd.find_element('name', "firstname").send_keys(u"Павел")
+        wd.find_element('name', "middlename").click()
+        wd.find_element('name', "middlename").clear()
+        wd.find_element('name', "middlename").send_keys(u"Арсений")
+        wd.find_element('name', "lastname").click()
+        wd.find_element('name', "lastname").clear()
+        wd.find_element('name', "lastname").send_keys(u"Петровский")
         wd.find_element('name', "title").click()
         wd.find_element('name', "title").clear()
         wd.find_element('name', "title").send_keys("QA engineer")
@@ -80,10 +79,24 @@ class TestAddEntry(unittest.TestCase):
         wd.find_element('name', "ayear").clear()
         wd.find_element('name', "ayear").send_keys("1985")
         wd.find_element('xpath', "//input[20]").click()
+
+    def return_to_the_entry_list(self, wd):
         wd.find_element('id', "logo").click()
+
+    def logout(self, wd):
         wd.find_element('link text', "Logout").click()
 
+    def test_add_entry(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd)
+        self.open_entry_page(wd)
+        self.create_entry(wd)
+        self.return_to_the_entry_list(wd)
+        self.logout(wd)
 
+    def return_to_the_entry_list(self, wd):
+        wd.find_element('id', "logo").click()
 
     def is_element_present(self, how, what):
         try: self.wd.find_element(by=how, value=what)
