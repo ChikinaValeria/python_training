@@ -2,6 +2,7 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException
 import unittest
+from selenium.webdriver.support.select import Select
 
 class TestAddEntry(unittest.TestCase):
     def setUp(self):
