@@ -2,7 +2,7 @@
 
 import pytest
 from entry import Entry
-from application_2 import Application
+from application import Application
 
 
 # инициализатор фикстуры
