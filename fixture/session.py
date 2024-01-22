@@ -1,4 +1,4 @@
-
+import time
 
 class Session_helper:
 
@@ -17,4 +17,6 @@ class Session_helper:
 
     def logout(self):
         wd = self.app.wd
+        time.sleep(5)
         wd.find_element('link text', "Logout").click()
+        time.sleep(5)

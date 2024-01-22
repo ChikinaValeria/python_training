@@ -51,4 +51,5 @@ class Entry_helper:
 
     def return_to_the_entry_list(self):
         wd = self.app.wd
-        wd.find_element('id', "logo").click()
+        #wd.find_element('id', "logo").click()
+        wd.find_element('link text', "home page").click()

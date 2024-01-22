@@ -9,6 +9,10 @@ class Group_helper:
         wd = self.app.wd
         wd.find_element('link text', "groups").click()
 
+    def return_to_groups_page(self):
+        wd = self.app.wd
+        wd.find_element('link text', "group page").click()
+
     def create(self, group):
         wd = self.app.wd
         self.open_groups_page()
@@ -37,6 +41,3 @@ class Group_helper:
         wd.find_element('name', "delete").click()
         self.return_to_groups_page()
 
-    def return_to_groups_page(self):
-        wd = self.app.wd
-        wd.find_element('link text', "group page").click()

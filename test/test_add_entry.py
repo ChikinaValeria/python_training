@@ -3,6 +3,7 @@
 from model.entry import Entry
 
 
+
 def test_add_entry(app):
     app.session.login(password="secret", username="admin")
     app.entry.create(Entry(firstname="Павел", lastname="Петровский", address="Russia, Saint-Petersburg",
@@ -19,5 +20,6 @@ def test_add_almost_empty_entry(app):
                            byear="", ayear="", bmonth="-", aday="",
                            bday="", amonth="-"))
     app.session.logout()
+
 
 
