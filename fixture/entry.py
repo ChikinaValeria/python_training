@@ -1,4 +1,6 @@
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.by import By
+import time
 class Entry_helper:
 
     def __init__(self, app):
@@ -51,5 +53,15 @@ class Entry_helper:
 
     def return_to_the_entry_list(self):
         wd = self.app.wd
-        #wd.find_element('id', "logo").click()
+        # wd.find_element('id', "logo").click()
         wd.find_element('link text', "home page").click()
+
+    def delete_first_entry(self):
+        wd = self.app.wd
+        # select first entry
+        wd.find_element('name', "selected[]").click()
+        # submit deletion
+        #wd.find_element('value', "Delete").click()
+        #wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.find_element(By.XPATH, "//input[@value='Delete']").click()
+        time.sleep(3)
