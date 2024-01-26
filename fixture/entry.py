@@ -6,46 +6,15 @@ class Entry_helper:
     def __init__(self, app):
         self.app = app
 
-
-    def fill_entry_form(self, entry):
+    def open_the_entry_list(self):
         wd = self.app.wd
-        time.sleep(2)
-        wd.find_element('name', "firstname").click()
-        wd.find_element('name', "firstname").clear()
-        wd.find_element('name', "firstname").send_keys(entry.firstname)
-        wd.find_element('name', "lastname").click()
-        wd.find_element('name', "lastname").clear()
-        wd.find_element('name', "lastname").send_keys(entry.lastname)
-        wd.find_element('name', "address").click()
-        wd.find_element('name', "address").clear()
-        wd.find_element('name', "address").send_keys(entry.address)
-        wd.find_element('name', "home").click()
-        wd.find_element('name', "home").clear()
-        wd.find_element('name', "home").send_keys(entry.home)
-        wd.find_element('name', "mobile").click()
-        wd.find_element('name', "mobile").clear()
-        wd.find_element('name', "mobile").send_keys(entry.mobile)
-        wd.find_element('name', "email").click()
-        wd.find_element('name', "email").clear()
-        wd.find_element('name', "email").send_keys(entry.email)
-        wd.find_element('name', "email2").click()
-        wd.find_element('name', "email2").clear()
-        wd.find_element('name', "email2").send_keys(entry.email2)
-        wd.find_element('name', "bday").click()
-        Select(wd.find_element('name', "bday")).select_by_visible_text(entry.bday)
-        wd.find_element('name', "bmonth").click()
-        wd.find_element('name', "bmonth").click()
-        Select(wd.find_element('name', "bmonth")).select_by_visible_text(entry.bmonth)
-        wd.find_element('name', "byear").click()
-        wd.find_element('name', "byear").clear()
-        wd.find_element('name', "byear").send_keys(entry.byear)
-        wd.find_element('name', "aday").click()
-        Select(wd.find_element('name', "aday")).select_by_visible_text(entry.aday)
-        wd.find_element('name', "amonth").click()
-        Select(wd.find_element('name', "amonth")).select_by_visible_text(entry.amonth)
-        wd.find_element('name', "ayear").click()
-        wd.find_element('name', "ayear").clear()
-        wd.find_element('name', "ayear").send_keys(entry.ayear)
+        # wd.find_element('id', "logo").click()
+        wd.find_element('link text', "home").click()
+
+    def return_to_the_entry_list(self):
+        wd = self.app.wd
+        # wd.find_element('id', "logo").click()
+        wd.find_element('link text', "home page").click()
 
     def create(self, entry):
         wd = self.app.wd
@@ -57,32 +26,55 @@ class Entry_helper:
         wd.find_element('xpath', "//input[20]").click()
         self.return_to_the_entry_list()
 
-    def return_to_the_entry_list(self):
+    def fill_entry_form(self, entry):
         wd = self.app.wd
-        # wd.find_element('id', "logo").click()
-        wd.find_element('link text', "home page").click()
+        self.change_field("firstname", entry.firstname)
+        self.change_field("lastname", entry.lastname)
+        self.change_field("address", entry.address)
+        self.change_field("home", entry.home)
+        self.change_field("mobile", entry.mobile)
+        self.change_field("email", entry.email)
+        self.change_field("email2", entry.email2)
+        self.change_drop_list_option("bday", entry.bday)
+        self.change_drop_list_option("bmonth", entry.bmonth)
+        self.change_field("byear", entry.byear)
+        self.change_drop_list_option("aday", entry.aday)
+        self.change_drop_list_option("amonth", entry.amonth)
+        self.change_field("ayear", entry.ayear)
 
-    def open_the_entry_list(self):
+    def change_field(self, field_name, text):
         wd = self.app.wd
-        # wd.find_element('id', "logo").click()
-        wd.find_element('link text', "home").click()
+        if text is not None:
+            wd.find_element('name', field_name).click()
+            wd.find_element('name', field_name).clear()
+            wd.find_element('name', field_name).send_keys(text)
+
+    def change_drop_list_option(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element('name', field_name).click()
+            Select(wd.find_element('name', field_name)).select_by_visible_text(text)
+
 
     def delete_first_entry(self):
         wd = self.app.wd
         self.open_the_entry_list()
         # select first entry
-        wd.find_element('name', "selected[]").click()
+        self.select_first_entry()
         # submit deletion
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
         time.sleep(3)
 
-    def edit(self, entry):
+    def edit_first_entry(self, new_entry_data):
         wd = self.app.wd
         self.open_the_entry_list()
         # select first entry
-        wd.find_element('name', "selected[]").click()
+        self.select_first_entry()
         wd.find_element(By.XPATH, "// img[ @ alt = 'Edit']").click()
-        self.fill_entry_form(entry)
+        self.fill_entry_form(new_entry_data)
         wd.find_element('name', "update").click()
         self.return_to_the_entry_list()
 
+    def select_first_entry(self):
+        wd = self.app.wd
+        wd.find_element('name', "selected[]").click()

@@ -1,7 +1,7 @@
 
 class Entry:
-    def __init__(self,firstname, lastname, address, home, mobile,
-                 email, email2, bday, bmonth, byear, aday, amonth, ayear):
+    def __init__(self, firstname=None, lastname=None, address=None, home=None, mobile=None,
+                 email=None, email2=None, bday=None, bmonth=None, byear=None, aday=None, amonth=None, ayear=None):
         self.firstname = firstname
         self.lastname = lastname
         self.address = address

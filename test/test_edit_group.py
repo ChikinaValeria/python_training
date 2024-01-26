@@ -1,9 +1,8 @@
 from model.group import Group
 
-"""def test_edit_first_group_all_fields(app):
-    app.session.login(username = "admin", password = "secret")
+def test_edit_first_group_all_fields(app):
     app.group.edit_first_group(Group (name ="Отредактированная группа", header ="Отредактированный заголовок", footer ="Дополненный комментарий"))
-    app.session.logout()"""
+
 
 
 def test_edit_first_group_name(app):
