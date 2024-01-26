@@ -78,3 +78,8 @@ class Entry_helper:
     def select_first_entry(self):
         wd = self.app.wd
         wd.find_element('name', "selected[]").click()
+
+    def count(self):
+        wd = self.app.wd
+        self.open_the_entry_list()
+        return len(wd.find_elements('name', "selected[]"))
