@@ -1,4 +1,5 @@
 import time
+from selenium.webdriver.common.by import By
 
 class Session_helper:
 
@@ -20,3 +21,25 @@ class Session_helper:
         time.sleep(5)
         wd.find_element('link text', "Logout").click()
         time.sleep(5)
+
+    def ensure_logout(self):
+        wd = self.app.wd
+        if self.is_logged_in():
+            self.logout()
+
+    def ensure_login(self, username, password):
+        wd = self.app.wd
+        if self.is_logged_in():
+            if self.is_logged_in_as(username):
+                return
+            else:
+                self.logout()
+        self.login(username, password)
+
+    def is_logged_in(self):
+        wd = self.app.wd
+        return len(wd.find_elements('link text', "Logout")) > 0
+
+    def is_logged_in_as(self, username):
+        wd = self.app.wd
+        return wd.find_element(By.XPATH, "//div/div[1]/form/b").text == "("+username+")"

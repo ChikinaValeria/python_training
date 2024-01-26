@@ -6,7 +6,7 @@ from model.group import Group
 def test_add_group(app):
     app.group.create(Group (name ="Моя первая группа", header ="Хорошая группа",
                             footer = "Нужная группа"))
-
+    #app.session.logout()
 
 
 
