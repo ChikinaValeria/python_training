@@ -6,8 +6,13 @@ class Entry_helper:
     def __init__(self, app):
         self.app = app
 
+
+    def fill_entry_form(self, entry):
+        wd = self.app.wd
+        pass
     def create(self, entry):
         wd = self.app.wd
+        self.open_the_entry_list()
         # init entry creation
         wd.find_element('link text', "add new").click()
         # fill entry form
@@ -56,8 +61,14 @@ class Entry_helper:
         # wd.find_element('id', "logo").click()
         wd.find_element('link text', "home page").click()
 
+    def open_the_entry_list(self):
+        wd = self.app.wd
+        # wd.find_element('id', "logo").click()
+        wd.find_element('link text', "home").click()
+
     def delete_first_entry(self):
         wd = self.app.wd
+        self.open_the_entry_list()
         # select first entry
         wd.find_element('name', "selected[]").click()
         # submit deletion
@@ -66,6 +77,7 @@ class Entry_helper:
 
     def edit(self, entry):
         wd = self.app.wd
+        self.open_the_entry_list()
         # select first entry
         wd.find_element('name', "selected[]").click()
         wd.find_element(By.XPATH, "// img[ @ alt = 'Edit']").click()
