@@ -8,8 +8,8 @@ class Entry_helper:
 
     def open_the_entry_list(self):
         wd = self.app.wd
-        # wd.find_element('id', "logo").click()
-        wd.find_element('link text', "home").click()
+        if not (wd.current_url.endswith("addressbook/") and len(wd.find_elements('name', 'add')) > 0):
+            wd.find_element('link text', "home").click()
 
     def return_to_the_entry_list(self):
         wd = self.app.wd
