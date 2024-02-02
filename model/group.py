@@ -9,3 +9,6 @@ class Group:
 
     def __repr__(self):
         return "Group(%s, %s)" % (self.name, self.id)
+
+    def __eq__(self, other):
+        self.name == other.name and self.id == other.id
