@@ -19,7 +19,7 @@ def test_add_entry(app):
 
 def test_add_almost_empty_entry(app):
     old_entries = app.entry.get_entry_list()
-    entry = Entry(firstname="", lastname="", address="",
+    entry = Entry(firstname="", lastname= "", address="",
                            home="", mobile="", email="", email2="",
                            byear="", ayear="", bmonth="-", aday="",
                            bday="", amonth="-")

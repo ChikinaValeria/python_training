@@ -9,4 +9,3 @@ def test_delete_first_entry(app):
     assert len(old_entries) - 1 == len(new_entries)
     old_entries[0:1] = []
     assert old_entries == new_entries
-    #assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
