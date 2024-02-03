@@ -76,7 +76,7 @@ class Group_helper:
             text = element.text
             id = element.find_element('name', "selected[]").get_attribute("value")
             groups.append(Group(name=text, id=id))
-        print(groups)
+        #print(groups)
         return groups
 
 

@@ -1,6 +1,7 @@
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 import time
+from model.entry import Entry
 class Entry_helper:
 
     def __init__(self, app):
@@ -83,3 +84,15 @@ class Entry_helper:
         wd = self.app.wd
         self.open_the_entry_list()
         return len(wd.find_elements('name', "selected[]"))
+
+    def get_entry_list(self):
+        wd = self.app.wd
+        self.open_the_entry_list()
+        entries = []
+        for element in wd.find_elements('name', "entry"):
+            firstname = element.find_element(By.CSS_SELECTOR, "td:nth-child(3)").text
+            lastname = element.find_element(By.CSS_SELECTOR, "td:nth-child(2)").text
+            id = element.find_element('name', "selected[]").get_attribute("value")
+            entries.append(Entry(firstname = firstname, lastname=lastname, id=id))
+        print(entries)
+        return entries
