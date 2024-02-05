@@ -58,7 +58,7 @@ class Entry_helper:
             Select(wd.find_element('name', field_name)).select_by_visible_text(text)
 
 
-    def delete_first_entry(self):
+    def delete_first_entry_oldstyle(self):
         wd = self.app.wd
         self.open_the_entry_list()
         # select first entry
@@ -68,7 +68,37 @@ class Entry_helper:
         time.sleep(3)
         self.entry_cache = None
 
+    def delete_first_entry(self):
+        wd = self.app.wd
+        self.delete_entry_by_index(0)
+
+    def delete_entry_by_index(self,index):
+        wd = self.app.wd
+        self.open_the_entry_list()
+        # select first entry
+        self.select_entry_by_index(index)
+        # submit deletion
+        wd.find_element(By.XPATH, "//input[@value='Delete']").click()
+        time.sleep(3)
+        self.entry_cache = None
+
     def edit_first_entry(self, new_entry_data):
+        wd = self.app.wd
+        self.edit_entry_by_index(0)
+
+    def edit_entry_by_index(self, index, new_entry_data):
+        wd = self.app.wd
+        self.open_the_entry_list()
+        # select first entry
+        self.select_entry_by_index(index)
+        wd.find_elements(By.XPATH, "// img[ @ alt = 'Edit']")[index].click()
+        self.fill_entry_form(new_entry_data)
+        wd.find_element('name', "update").click()
+        self.return_to_the_entry_list()
+        self.entry_cache = None
+
+
+    def edit_first_entry_oldstyle(self, new_entry_data):
         wd = self.app.wd
         self.open_the_entry_list()
         # select first entry
@@ -81,7 +111,12 @@ class Entry_helper:
 
     def select_first_entry(self):
         wd = self.app.wd
-        wd.find_element('name', "selected[]").click()
+        wd.find_elements('name', "selected[]")[0].click()
+
+    def select_entry_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements(By.NAME, "selected[]")[index].click()
+
 
     def count(self):
         wd = self.app.wd
