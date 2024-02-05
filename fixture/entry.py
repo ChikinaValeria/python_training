@@ -26,6 +26,7 @@ class Entry_helper:
         # submit entry creation
         wd.find_element('xpath', "//input[20]").click()
         self.return_to_the_entry_list()
+        self.entry_cache = None
 
     def fill_entry_form(self, entry):
         wd = self.app.wd
@@ -65,6 +66,7 @@ class Entry_helper:
         # submit deletion
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
         time.sleep(3)
+        self.entry_cache = None
 
     def edit_first_entry(self, new_entry_data):
         wd = self.app.wd
@@ -75,6 +77,7 @@ class Entry_helper:
         self.fill_entry_form(new_entry_data)
         wd.find_element('name', "update").click()
         self.return_to_the_entry_list()
+        self.entry_cache = None
 
     def select_first_entry(self):
         wd = self.app.wd
@@ -85,14 +88,17 @@ class Entry_helper:
         self.open_the_entry_list()
         return len(wd.find_elements('name', "selected[]"))
 
+    entry_cache = None
+
     def get_entry_list(self):
-        wd = self.app.wd
-        self.open_the_entry_list()
-        entries = []
-        for element in wd.find_elements('name', "entry"):
-            firstname = element.find_element(By.CSS_SELECTOR, "td:nth-child(3)").text
-            lastname = element.find_element(By.CSS_SELECTOR, "td:nth-child(2)").text
-            id = element.find_element('name', "selected[]").get_attribute("value")
-            entries.append(Entry(firstname = firstname, lastname=lastname, id=id))
-        print(entries)
-        return entries
+        if self.entry_cache is None:
+            wd = self.app.wd
+            self.open_the_entry_list()
+            self.entry_cache = []
+            for element in wd.find_elements('name', "entry"):
+                firstname = element.find_element(By.CSS_SELECTOR, "td:nth-child(3)").text
+                lastname = element.find_element(By.CSS_SELECTOR, "td:nth-child(2)").text
+                id = element.find_element('name', "selected[]").get_attribute("value")
+                self.entry_cache.append(Entry(firstname = firstname, lastname=lastname, id=id))
+        #print(self.entry_cache)
+        return list(self.entry_cache)

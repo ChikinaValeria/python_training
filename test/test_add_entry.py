@@ -11,8 +11,8 @@ def test_add_entry(app):
                            email2="pavel1@gmail.com", byear="1985", ayear="1985", bmonth="May",
                            aday="16", bday="1", amonth="October")
     app.entry.create(entry)
+    assert len(old_entries) + 1 == app.entry.count()
     new_entries = app.entry.get_entry_list()
-    assert len(old_entries) + 1 == len(new_entries)
     old_entries.append(entry)
     assert sorted(old_entries, key=Entry.id_or_max) == sorted(new_entries, key=Entry.id_or_max)
 
@@ -24,8 +24,8 @@ def test_add_almost_empty_entry(app):
                            byear="", ayear="", bmonth="-", aday="",
                            bday="", amonth="-")
     app.entry.create(entry)
+    assert len(old_entries) + 1 == app.entry.count()
     new_entries = app.entry.get_entry_list()
-    assert len(old_entries) + 1 == len(new_entries)
     old_entries.append(entry)
     assert sorted(old_entries, key=Entry.id_or_max) == sorted(new_entries, key=Entry.id_or_max)
 

@@ -5,7 +5,7 @@ def test_delete_first_entry(app):
         app.entry.create(Entry(firstname='test'))
     old_entries = app.entry.get_entry_list()
     app.entry.delete_first_entry()
+    assert len(old_entries) - 1 == app.entry.count()
     new_entries = app.entry.get_entry_list()
-    assert len(old_entries) - 1 == len(new_entries)
     old_entries[0:1] = []
     assert old_entries == new_entries
