@@ -35,6 +35,7 @@ class Entry_helper:
         self.change_field("address", entry.address)
         self.change_field("home", entry.home)
         self.change_field("mobile", entry.mobile)
+        self.change_field("work", entry.work)
         self.change_field("email", entry.email)
         self.change_field("email2", entry.email2)
         self.change_drop_list_option("bday", entry.bday)
@@ -151,3 +152,14 @@ class Entry_helper:
         row = wd.find_elements('name', "entry")[index]
         cell = row.find_elements(By.TAG_NAME, "td")[6]
         cell.find_elements(By.TAG_NAME, "a").click()
+
+    def get_entry_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.open_entry_to_edit_by_index(index)
+        firstname = wd.find_element('name', "firstname").get_attribute("value")
+        lastname = wd.find_element('name', "lastname").get_attribute("value")
+        id = wd.find_element('name', "id").get_attribute("value")
+        home = wd.find_element('name', "home").get_attribute("value")
+        mobile = wd.find_element('name', "mobile").get_attribute("value")
+        work = wd.find_element('name', "work").get_attribute("value")
+        return Entry(firstname=firstname, lastname=lastname, id=id, home=home, mobile=mobile, work=work)

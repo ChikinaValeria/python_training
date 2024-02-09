@@ -6,7 +6,7 @@ from random import randrange
         app.entry.create(Entry(firstname='test'))
     old_entries = app.entry.get_entry_list()
     app.entry.edit_first_entry(Entry (firstname="Иммануил", lastname="Павловский", address="Russia, Nahodka",
-                               home="987654321", mobile="8 921 921 92 92", email="Ppavel@gmail.com",
+                               home="987654321", mobile="8 921 921 92 92", work="721 92 92", email="Ppavel@gmail.com",
                                email2="Lpavel1@gmail.com", byear="1985", ayear="1985", bmonth="May",
                                aday="16", bday="1", amonth="October"))
     assert len(old_entries) == app.entry.count()
