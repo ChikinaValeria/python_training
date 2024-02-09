@@ -137,3 +137,17 @@ class Entry_helper:
                 self.entry_cache.append(Entry(firstname = firstname, lastname=lastname, id=id))
         #print(self.entry_cache)
         return list(self.entry_cache)
+
+    def open_entry_to_edit_by_index(self, index):
+        wd = self.app.wd
+        self.open_the_entry_list()
+        row = wd.find_elements('name', "entry")[index]
+        cell = row.find_elements(By.TAG_NAME, "td")[7]
+        cell.find_elements(By.TAG_NAME, "a").click()
+
+    def open_entry_view_by_index(self, index):
+        wd = self.app.wd
+        self.open_the_entry_list()
+        row = wd.find_elements('name', "entry")[index]
+        cell = row.find_elements(By.TAG_NAME, "td")[6]
+        cell.find_elements(By.TAG_NAME, "a").click()
