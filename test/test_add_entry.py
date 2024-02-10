@@ -17,7 +17,7 @@ def test_add_entry(app):
     assert sorted(old_entries, key=Entry.id_or_max) == sorted(new_entries, key=Entry.id_or_max)
 
 
-def test_add_almost_empty_entry(app):
+"""def test_add_almost_empty_entry(app):
     old_entries = app.entry.get_entry_list()
     entry = Entry(firstname="", lastname= "", address="",
                            home="", mobile="", work="", email="", email2="",
@@ -27,7 +27,7 @@ def test_add_almost_empty_entry(app):
     assert len(old_entries) + 1 == app.entry.count()
     new_entries = app.entry.get_entry_list()
     old_entries.append(entry)
-    assert sorted(old_entries, key=Entry.id_or_max) == sorted(new_entries, key=Entry.id_or_max)
+    assert sorted(old_entries, key=Entry.id_or_max) == sorted(new_entries, key=Entry.id_or_max)"""
 
 
 

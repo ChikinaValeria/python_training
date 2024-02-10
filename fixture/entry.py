@@ -131,12 +131,25 @@ class Entry_helper:
             wd = self.app.wd
             self.open_the_entry_list()
             self.entry_cache = []
-            for element in wd.find_elements('name', "entry"):
-                firstname = element.find_element(By.CSS_SELECTOR, "td:nth-child(3)").text
-                lastname = element.find_element(By.CSS_SELECTOR, "td:nth-child(2)").text
-                id = element.find_element('name', "selected[]").get_attribute("value")
-                self.entry_cache.append(Entry(firstname = firstname, lastname=lastname, id=id))
-        #print(self.entry_cache)
+            for row in wd.find_elements('name', "entry"):
+                cells = row.find_elements(By.TAG_NAME, "td")
+                firstname = cells[2].text
+                lastname = cells[1].text
+                id = cells[0].find_element(By.TAG_NAME, "input").get_attribute("value")
+                #firstname = element.find_element(By.CSS_SELECTOR, "td:nth-child(3)").text
+                #lastname = element.find_element(By.CSS_SELECTOR, "td:nth-child(2)").text
+                #id = element.find_element('name', "selected[]").get_attribute("value")
+                all_phones = cells[5].text.splitlines()
+                print('all phones', all_phones)
+                print('number 1', all_phones[0])
+                print('number 2', all_phones[1])
+                print('number 3', all_phones[2])
+                self.entry_cache.append(Entry(firstname = firstname, lastname=lastname, id=id, home = all_phones[0],
+                                              mobile = all_phones[1], work = all_phones[2] ))
+                print(self.entry_cache)
+        print(self.entry_cache)
+
+
         return list(self.entry_cache)
 
     def open_entry_to_edit_by_index(self, index):
@@ -144,14 +157,14 @@ class Entry_helper:
         self.open_the_entry_list()
         row = wd.find_elements('name', "entry")[index]
         cell = row.find_elements(By.TAG_NAME, "td")[7]
-        cell.find_elements(By.TAG_NAME, "a").click()
+        cell.find_element(By.TAG_NAME, "a").click()
 
     def open_entry_view_by_index(self, index):
         wd = self.app.wd
         self.open_the_entry_list()
         row = wd.find_elements('name', "entry")[index]
         cell = row.find_elements(By.TAG_NAME, "td")[6]
-        cell.find_elements(By.TAG_NAME, "a").click()
+        cell.find_element(By.TAG_NAME, "a").click()
 
     def get_entry_info_from_edit_page(self, index):
         wd = self.app.wd
@@ -159,7 +172,7 @@ class Entry_helper:
         firstname = wd.find_element('name', "firstname").get_attribute("value")
         lastname = wd.find_element('name', "lastname").get_attribute("value")
         id = wd.find_element('name', "id").get_attribute("value")
-        home = wd.find_element('name', "home").get_attribute("value")
-        mobile = wd.find_element('name', "mobile").get_attribute("value")
-        work = wd.find_element('name', "work").get_attribute("value")
+        home = wd.find_element('name', "home").get_attribute("value").replace(' ', '')
+        mobile = wd.find_element('name', "mobile").get_attribute("value").replace(' ', '')
+        work = wd.find_element('name', "work").get_attribute("value").replace(' ', '')
         return Entry(firstname=firstname, lastname=lastname, id=id, home=home, mobile=mobile, work=work)
