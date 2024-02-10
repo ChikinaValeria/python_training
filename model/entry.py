@@ -20,7 +20,7 @@ class Entry:
 
 
     def __repr__(self):
-        return "Entry(%s, %s, %s)" % (self.firstname, self.lastname, self.id)
+        return "Entry(%s, %s, %s, %s, %s, %s)" % (self.firstname, self.lastname, self.id, self.home, self.mobile, self.work)
 
     def __eq__(self, other):
         return self.firstname == other.firstname and self.lastname == other.lastname and (self.id is None or other.id is None or self.id == other.id)

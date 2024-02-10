@@ -2,6 +2,7 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 import time
 from model.entry import Entry
+import re
 class Entry_helper:
 
     def __init__(self, app):
@@ -176,3 +177,14 @@ class Entry_helper:
         mobile = wd.find_element('name', "mobile").get_attribute("value").replace(' ', '')
         work = wd.find_element('name', "work").get_attribute("value").replace(' ', '')
         return Entry(firstname=firstname, lastname=lastname, id=id, home=home, mobile=mobile, work=work)
+
+
+    def get_entry_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_entry_view_by_index(index)
+        text = wd.find_element(By.ID, "content").text
+        home = re.search("H: (.*)", text).group(1).replace(' ', '')
+        mobile = re.search("M: (.*)", text).group(1).replace(' ', '')
+        work = re.search("W: (.*)", text).group(1).replace(' ', '')
+        return Entry(home=home, mobile=mobile, work=work)
+
