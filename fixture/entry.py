@@ -140,13 +140,13 @@ class Entry_helper:
                 #firstname = element.find_element(By.CSS_SELECTOR, "td:nth-child(3)").text
                 #lastname = element.find_element(By.CSS_SELECTOR, "td:nth-child(2)").text
                 #id = element.find_element('name', "selected[]").get_attribute("value")
-                all_phones = cells[5].text.splitlines()
+                all_phones = cells[5].text
                 print('all phones', all_phones)
                 print('number 1', all_phones[0])
                 print('number 2', all_phones[1])
                 print('number 3', all_phones[2])
-                self.entry_cache.append(Entry(firstname = firstname, lastname=lastname, id=id, home = all_phones[0],
-                                              mobile = all_phones[1], work = all_phones[2] ))
+                self.entry_cache.append(Entry(firstname = firstname, lastname=lastname, id=id,
+                                              all_phones_from_home_page = all_phones))
                 print(self.entry_cache)
         print(self.entry_cache)
 
