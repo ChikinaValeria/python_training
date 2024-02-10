@@ -1,6 +1,7 @@
 from sys import maxsize
 class Entry:
-    def __init__(self, firstname=None, lastname=None, address=None, home=None, mobile=None, work=None, all_phones_from_home_page = None,
+    def __init__(self, firstname=None, lastname=None, address=None, home=None, mobile=None, work=None,
+                 all_phones_from_home_page = None, all_emails_from_home_page = None,
                  email=None, email2=None, bday=None, bmonth=None, byear=None, aday=None,
                  amonth=None, ayear=None, id = None):
         self.firstname = firstname
@@ -10,6 +11,7 @@ class Entry:
         self.mobile = mobile
         self.work = work
         self.all_phones_from_home_page = all_phones_from_home_page
+        self.all_emails_from_home_page = all_emails_from_home_page
         self.email = email
         self.email2 = email2
         self.bday = bday

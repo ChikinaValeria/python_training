@@ -137,16 +137,18 @@ class Entry_helper:
                 firstname = cells[2].text
                 lastname = cells[1].text
                 id = cells[0].find_element(By.TAG_NAME, "input").get_attribute("value")
+                address = cells[3].text
                 #firstname = element.find_element(By.CSS_SELECTOR, "td:nth-child(3)").text
                 #lastname = element.find_element(By.CSS_SELECTOR, "td:nth-child(2)").text
                 #id = element.find_element('name', "selected[]").get_attribute("value")
                 all_phones = cells[5].text
+                all_emails = cells[4].text
                 print('all phones', all_phones)
                 print('number 1', all_phones[0])
                 print('number 2', all_phones[1])
                 print('number 3', all_phones[2])
-                self.entry_cache.append(Entry(firstname = firstname, lastname=lastname, id=id,
-                                              all_phones_from_home_page = all_phones))
+                self.entry_cache.append(Entry(firstname = firstname, lastname=lastname, id=id, address = address,
+                                              all_phones_from_home_page = all_phones, all_emails_from_home_page = all_emails))
                 print(self.entry_cache)
         print(self.entry_cache)
 
@@ -172,11 +174,15 @@ class Entry_helper:
         self.open_entry_to_edit_by_index(index)
         firstname = wd.find_element('name', "firstname").get_attribute("value")
         lastname = wd.find_element('name', "lastname").get_attribute("value")
+        address = wd.find_element('name', "address").get_attribute("value")
         id = wd.find_element('name', "id").get_attribute("value")
         home = wd.find_element('name', "home").get_attribute("value").replace(' ', '')
         mobile = wd.find_element('name', "mobile").get_attribute("value").replace(' ', '')
         work = wd.find_element('name', "work").get_attribute("value").replace(' ', '')
-        return Entry(firstname=firstname, lastname=lastname, id=id, home=home, mobile=mobile, work=work)
+        email = wd.find_element('name', "email").get_attribute("value")
+        email2 = wd.find_element('name', "email2").get_attribute("value")
+        return Entry(firstname=firstname, lastname=lastname, address= address, id=id, home=home, mobile=mobile,
+                     work=work, email = email, email2 = email2)
 
 
     def get_entry_from_view_page(self, index):
