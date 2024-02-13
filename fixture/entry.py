@@ -33,6 +33,7 @@ class Entry_helper:
         wd = self.app.wd
         self.change_field("firstname", entry.firstname)
         self.change_field("lastname", entry.lastname)
+        self.change_field("nickname", entry.nickname)
         self.change_field("address", entry.address)
         self.change_field("home", entry.home)
         self.change_field("mobile", entry.mobile)

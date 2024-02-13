@@ -1,11 +1,12 @@
 from sys import maxsize
 class Entry:
-    def __init__(self, firstname=None, lastname=None, address=None, home=None, mobile=None, work=None,
+    def __init__(self, firstname=None, lastname=None, nickname = None, address=None, home=None, mobile=None, work=None,
                  all_phones_from_home_page = None, all_emails_from_home_page = None,
                  email=None, email2=None, email3 = None, bday=None, bmonth=None, byear=None, aday=None,
                  amonth=None, ayear=None, id = None):
         self.firstname = firstname
         self.lastname = lastname
+        self.nickname = nickname
         self.address = address
         self.home = home
         self.mobile = mobile
@@ -25,8 +26,8 @@ class Entry:
 
 
     def __repr__(self):
-        return "Entry(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" % (self.firstname, self.lastname, self.id, self.address, self.home, self.mobile,
-                                                  self.work, self.email, self.email2, self.email3,
+        return "Entry(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" % (self.firstname, self.lastname, self.nickname, self.id, self.address, self.home, self.mobile,
+                                                  self.work, self.email, self.email2, self.email3, self.bday, self.bmonth, self.byear, self.aday, self.amonth, self.ayear,
                                                   self.all_phones_from_home_page, self.all_emails_from_home_page)
 
     def __eq__(self, other):

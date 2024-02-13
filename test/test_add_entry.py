@@ -1,33 +1,41 @@
 # -*- coding: utf-8 -*-
-
+import pytest
+from faker import Faker
+fake = Faker("ru_RU")
 from model.entry import Entry
+import random
+import string
+
+def random_string(maxlen):
+    symbols = string.ascii_letters + string.digits + " "*10 + string.punctuation
+    return "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
+
+def random_month():
+    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    return random.choice(months)
 
 
+testdata = [Entry(firstname="", lastname= "", nickname= "", address="",
+                           home="", mobile="", work="", email="", email2="", email3="",
+                           byear="", ayear="", bmonth="-", aday="",
+                           bday="", amonth="-")] + [Entry(firstname=fake.first_name_female(), lastname=fake.last_name_female(),
+                           nickname = random_string(12) , address=fake.address(), home=fake.phone_number(), mobile=fake.phone_number(),
+                           work =fake.phone_number(), email=fake.ascii_free_email(), email2=fake.ascii_free_email(),
+                           email3=fake.ascii_free_email(), byear=str(random.randint(1930, 2010)),
+                           ayear=str(random.randint(1930, 2010)), bmonth=random_month(),
+                           aday=str(random.randint(1, 31)), bday=str(random.randint(1, 31)), amonth=random_month()) for i in range(5)]
 
-def test_add_entry(app):
+@pytest.mark.parametrize("entry", testdata, ids=[str(x) for x in testdata])
+def test_add_entry(app, entry):
     old_entries = app.entry.get_entry_list()
-    entry = Entry(firstname="Иван", lastname="Цветков", address="Russia, Saint-Petersburg",
-                           home="1234578", mobile="8 921 921 92 92", work ="987456", email="pavel@gmail.com",
-                           email2="pavel1@gmail.com", byear="1985", ayear="1985", bmonth="May",
-                           aday="16", bday="1", amonth="October")
     app.entry.create(entry)
+    print(testdata)
+    print(entry)
     assert len(old_entries) + 1 == app.entry.count()
     new_entries = app.entry.get_entry_list()
     old_entries.append(entry)
     assert sorted(old_entries, key=Entry.id_or_max) == sorted(new_entries, key=Entry.id_or_max)
 
-
-"""def test_add_almost_empty_entry(app):
-    old_entries = app.entry.get_entry_list()
-    entry = Entry(firstname="", lastname= "", address="",
-                           home="", mobile="", work="", email="", email2="",
-                           byear="", ayear="", bmonth="-", aday="",
-                           bday="", amonth="-")
-    app.entry.create(entry)
-    assert len(old_entries) + 1 == app.entry.count()
-    new_entries = app.entry.get_entry_list()
-    old_entries.append(entry)
-    assert sorted(old_entries, key=Entry.id_or_max) == sorted(new_entries, key=Entry.id_or_max)"""
 
 
 
