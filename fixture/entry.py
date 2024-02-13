@@ -175,8 +175,9 @@ class Entry_helper:
         work = wd.find_element('name', "work").get_attribute("value").replace(' ', '')
         email = wd.find_element('name', "email").get_attribute("value")
         email2 = wd.find_element('name', "email2").get_attribute("value")
+        email3 = wd.find_element('name', "email3").get_attribute("value")
         return Entry(firstname=firstname, lastname=lastname, address= address, id=id,
-                     home=home, mobile=mobile, work=work, email=email, email2=email2)
+                     home=home, mobile=mobile, work=work, email=email, email2=email2, email3=email3)
 
 
     def get_entry_from_view_page(self, index):
