@@ -9,7 +9,7 @@ fixture = None
 def app(request):
     global fixture
     if fixture is None:
-        fixture =Application()
+        fixture =Application(browser="ie")
     else:
         if not fixture.is_valid():
             fixture = Application()
@@ -25,3 +25,4 @@ def stop(request):
         fixture.destroy()
     request.addfinalizer(fin)
     return fixture
+
