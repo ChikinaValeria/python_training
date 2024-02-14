@@ -40,6 +40,7 @@ class Entry_helper:
         self.change_field("work", entry.work)
         self.change_field("email", entry.email)
         self.change_field("email2", entry.email2)
+        self.change_field("email3", entry.email3)
         self.change_drop_list_option("bday", entry.bday)
         self.change_drop_list_option("bmonth", entry.bmonth)
         self.change_field("byear", entry.byear)

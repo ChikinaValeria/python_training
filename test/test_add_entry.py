@@ -6,6 +6,7 @@ from model.entry import Entry
 import random
 import string
 
+
 def random_string(maxlen):
     symbols = string.ascii_letters + string.digits + " "*10 + string.punctuation
     return "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
@@ -29,8 +30,8 @@ testdata = [Entry(firstname="", lastname= "", nickname= "", address="",
 def test_add_entry(app, entry):
     old_entries = app.entry.get_entry_list()
     app.entry.create(entry)
-    print(testdata)
-    print(entry)
+    #print(testdata)
+    #print(entry)
     assert len(old_entries) + 1 == app.entry.count()
     new_entries = app.entry.get_entry_list()
     old_entries.append(entry)
