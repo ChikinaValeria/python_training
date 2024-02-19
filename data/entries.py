@@ -4,11 +4,11 @@ from model.entry import Entry
 import random
 import string
 
-constant = [Entry(firstname="Alexei", lastname= "Navalniy", nickname= "Aliosha", address="Moscow",
+constant = [Entry(firstname="Alex", lastname= "Ivanov", nickname= "Aliosha", address="Moscow",
                            home="(812)74125896", mobile="+7-921-111-22-33", work=" 2385269", email="moy@mail.ru", email2="moy2@mail.ru", email3="",
                            byear="", ayear="", bmonth="-", aday="",
                            bday="", amonth="-"),
-Entry(firstname="Julia", lastname= "Navalnaya", nickname= "Ulechka", address="London",
+Entry(firstname="Julia", lastname= "Ivanova", nickname= "Ulechka", address="London",
                            home="7 (741) 9852475 3", mobile="", work="", email="", email2="", email3="",
                            byear="", ayear="", bmonth="-", aday="",
                            bday="", amonth="-")

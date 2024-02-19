@@ -1,10 +1,11 @@
 from faker import Faker
-fake = Faker()
+fake = Faker("ru_RU")
 from model.entry import Entry
 import random
 import string
 import os.path
 import json
+import jsonpickle
 
 # генератор рандомной строки
 def random_string(maxlen):
@@ -32,7 +33,12 @@ testdata = [Entry(firstname="", lastname= "", nickname= "", address="",
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../data/entries.json")
 
 # открываем файл и записываем сгенерированные тестовые данные в формате json
-with open(file, "w") as f:
+"""with open(file, "w") as f:
     # default превращает данные в словарь
     # indent форматирует файл
-    f.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))
+    f.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))"""
+
+# открываем файл и записываем сгенерированные тестовые данные в формате json c использованием библиотеки jsonpickle
+with open(file, "w") as f:
+    jsonpickle.set_encoder_options("json", indent = 2)
+    f.write(jsonpickle.encode(testdata))
