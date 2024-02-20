@@ -27,7 +27,7 @@ testdata = [Entry(firstname="", lastname= "", nickname= "", address="",
                            work =fake.phone_number(), email=fake.ascii_free_email(), email2=fake.ascii_free_email(),
                            email3=fake.ascii_free_email(), byear=str(random.randint(1930, 2010)),
                            ayear=str(random.randint(1930, 2010)), bmonth=random_month(),
-                           aday=str(random.randint(1, 31)), bday=str(random.randint(1, 31)), amonth=random_month()) for i in range(3)]
+                           aday=str(random.randint(1, 31)), bday=str(random.randint(1, 31)), amonth=random_month()) for i in range(4)]
 
 # путь к файлу, в который запишем созданные данные
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../data/entries.json")
