@@ -29,9 +29,10 @@ def test_random_entry_on_home_page(app):
     entry_from_home_page = app.entry.get_entry_list()[random_entry]
     entry_from_edit_page = app.entry.get_entry_info_from_edit_page(random_entry)
     print("entry_home", entry_from_home_page)
-    print("entry_from_home_page", entry_from_home_page.all_emails_from_home_page)
+    print("entry_from_home_page -emails:", entry_from_home_page.all_emails_from_home_page)
     print("entry_edit", entry_from_edit_page)
-    print("entry_from_edit_page_merged", merge_emails_like_on_home_page(entry_from_edit_page))
+    print("entry_from_edit_page_merged - emails", merge_emails_like_on_home_page(entry_from_edit_page))
+
 
     assert entry_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(entry_from_edit_page)
     assert entry_from_home_page.firstname == entry_from_edit_page.firstname
@@ -56,7 +57,9 @@ def merge_emails_like_on_home_page(entry):
     return "\n".join(filter (lambda x: x != "", (map(lambda x: clear_emails(x), filter(lambda x: x is not None,
                                                                                   [entry.email, entry.email2, entry.email3])))))
 def clear_emails(s):
-    return re.sub(" ", "", s)
+    s = s.strip()
+    return re.sub("  ", "", s)
+
 def clear(s):
     return re.sub("[() -]", "", s)
 
