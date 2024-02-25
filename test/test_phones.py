@@ -58,7 +58,7 @@ def merge_emails_like_on_home_page(entry):
                                                                                   [entry.email, entry.email2, entry.email3])))))
 def clear_emails(s):
     s = s.strip()
-    return re.sub("  ", "", s)
+    return re.sub("  ", " ", s)
 
 def clear(s):
     return re.sub("[() -]", "", s)
