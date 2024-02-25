@@ -4,26 +4,42 @@ import jsonpickle
 import os.path
 from fixture.application import Application
 import importlib
+from fixture.db import DbFixture
 
 # глобальная переменная для хранения фикстуры
 fixture = None
 target = None
 
-# инициализатор фикстуры
+
+def load_config(file):
+    global target
+    if target is None:
+        # путь к текущему файлу
+        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
+        with open(config_file) as f:
+            target = json.load(f)
+    return target
+
+# инициализатор фикстуры подключения к вэбдрайверу
 @pytest.fixture
 def app(request):
     global fixture
-    global target
     browser = request.config.getoption("--browser")
-    if target is None:
-        # путь к текущему файлу
-        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))
-        with open(config_file) as f:
-            target = json.load(f)
+    web_config = load_config(request.config.getoption("--target"))["web"]
     if fixture is None or not fixture.is_valid():
-        fixture =Application(browser=browser, base_url=target["baseUrl"])
-    fixture.session.ensure_login(username=target["username"], password=target["password"])
+        fixture =Application(browser=browser, base_url=web_config["baseUrl"])
+    fixture.session.ensure_login(username=web_config["username"], password=web_config["password"])
     return fixture
+
+# фикстура подключения к БД
+@pytest.fixture(scope = "session")
+def db(request):
+    db_config = load_config(request.config.getoption("--target"))["db"]
+    dbfixture = DbFixture(host = db_config['host'], name=db_config['name'], user= db_config['user'], password =db_config['password'])
+    def fin():
+        dbfixture.destroy()
+    request.addfinalizer(fin)
+    return dbfixture
 
 # фикстура выполнится несмотря на то, что нигде не указана
 # благодаря параметру autouse
@@ -57,6 +73,8 @@ def load_from_module(module):
 def load_from_json(file):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data/%s.json" %  file)) as f:
         return jsonpickle.decode(f.read())
+
+
 
 
 
