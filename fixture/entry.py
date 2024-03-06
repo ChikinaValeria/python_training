@@ -86,6 +86,16 @@ class Entry_helper:
         time.sleep(3)
         self.entry_cache = None
 
+    def delete_entry_by_id(self,id):
+        wd = self.app.wd
+        self.open_the_entry_list()
+        # select first entry
+        self.select_entry_by_id(id)
+        # submit deletion
+        wd.find_element(By.XPATH, "//input[@value='Delete']").click()
+        time.sleep(3)
+        self.entry_cache = None
+
     def edit_first_entry(self, new_entry_data):
         wd = self.app.wd
         self.edit_entry_by_index(0)
@@ -121,6 +131,9 @@ class Entry_helper:
         wd = self.app.wd
         wd.find_elements(By.NAME, "selected[]")[index].click()
 
+    def select_entry_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element(By.CSS_SELECTOR, "input[id='%s']" % id).click()
 
     def count(self):
         wd = self.app.wd
