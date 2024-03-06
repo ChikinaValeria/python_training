@@ -83,6 +83,19 @@ class Group_helper:
         self.edit_group_by_index(0)
 
 
+    def edit_group_by_id(self, id, new_group_data):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_group_by_id(id)
+        # open modification form
+        wd.find_element('name', "edit").click()
+        # refill group form
+        self.fill_group_form(new_group_data)
+        # submit edition
+        wd.find_element('name', "update").click()
+        self.return_to_groups_page()
+        self.group_cache = None
+
     def edit_group_by_index(self, index, new_group_data):
         wd = self.app.wd
         self.open_groups_page()
