@@ -1,5 +1,6 @@
 import pymysql.cursors
 from model.group import Group
+from model.entry import Entry
 
 class DbFixture:
 
@@ -26,3 +27,20 @@ class DbFixture:
 
     def destroy(self):
         self.connection.close()
+
+
+    def get_entry_list(self):
+        list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select firstname, lastname, id, address, home, mobile, work, email, email2, email3 from addressbook")
+            for row in cursor:
+                (firstname, lastname, id, address, home, mobile, work, email, email2, email3) = row
+                list.append(Entry(firstname=firstname, lastname=lastname, id=str(id), address = address,
+                                  home = home, mobile=mobile, work=work, email=email, email2=email2, email3=email3))
+        finally:
+            cursor.close()
+        return list
+
+
+
