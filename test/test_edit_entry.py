@@ -1,5 +1,5 @@
 from model.entry import Entry
-from random import randrange
+import random
 
 """def test_edit_first_entry_all_fields(app):
     if app.entry.count() == 0:
@@ -13,28 +13,27 @@ from random import randrange
     new_entries = app.entry.get_entry_list()"""
 
 
-def test_edit_firstname_by_index(app):
+def test_edit_firstname_by_id(app, db, check_ui):
     if app.entry.count() == 0:
         app.entry.create(Entry(firstname='test'))
-    old_entries = app.entry.get_entry_list()
+    old_entries = db.get_entry_list()
     #print('Old entries ', old_entries)
-    index = randrange(len(old_entries))
-    #print(index)
-    print(old_entries[index])
-    entry = Entry (firstname="Олег")
-    entry.id = old_entries[index].id
-    entry.lastname = old_entries[index].lastname
-    #print(entry)
-    app.entry.edit_entry_by_index(index, entry)
-    assert len(old_entries) == app.entry.count()
-    new_entries = app.entry.get_entry_list()
-    #print(new_entries)
-    old_entries[index] = entry
-    #print('Old entries ', old_entries)
-    #print('Old entries sorted', sorted(old_entries, key=Entry.id_or_max))
-    #print('New entries ', new_entries)
-    #print('New entries sorted ', sorted(new_entries, key=Entry.id_or_max))
+    entry = random.choice(old_entries)
+    id = entry.id
+    lastname = entry.lastname
+    edited_entry = Entry (firstname="Клавдия", lastname=lastname, id=id)
+    app.entry.edit_entry_by_id(id, edited_entry)
+    #assert len(old_entries) == app.entry.count()
+    new_entries = db.get_entry_list()
+    for index in range(len(old_entries)):
+        if old_entries[index].id == id:
+            old_entries[index] = edited_entry
     assert sorted(old_entries, key=Entry.id_or_max) == sorted(new_entries, key=Entry.id_or_max)
+    if check_ui:
+        assert sorted(new_entries, key=Entry.id_or_max) == sorted(app.entry.get_entry_list(), key=Entry.id_or_max)
+
+
+
 
 
 """def test_edit_first_entry_home(app):

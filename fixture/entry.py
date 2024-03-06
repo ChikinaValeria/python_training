@@ -100,6 +100,17 @@ class Entry_helper:
         wd = self.app.wd
         self.edit_entry_by_index(0)
 
+    def edit_entry_by_id(self, id, new_entry_data):
+        wd = self.app.wd
+        self.open_the_entry_list()
+        # select first entry
+        self.select_entry_by_id(id)
+        wd.find_element(By.XPATH, "// img[ @ alt = 'Edit']").click()
+        self.fill_entry_form(new_entry_data)
+        wd.find_element('name', "update").click()
+        self.return_to_the_entry_list()
+        self.entry_cache = None
+
     def edit_entry_by_index(self, index, new_entry_data):
         wd = self.app.wd
         self.open_the_entry_list()
