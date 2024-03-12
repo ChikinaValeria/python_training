@@ -21,7 +21,7 @@ def test_edit_firstname_by_id(app, db, check_ui):
     entry = random.choice(old_entries)
     id = entry.id
     lastname = entry.lastname
-    edited_entry = Entry (firstname="Клавдия", lastname=lastname, id=id)
+    edited_entry = Entry (firstname="Lilit", lastname=lastname, id=id)
     app.entry.edit_entry_by_id(id, edited_entry)
     #assert len(old_entries) == app.entry.count()
     new_entries = db.get_entry_list()

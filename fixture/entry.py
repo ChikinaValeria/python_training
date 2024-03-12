@@ -89,11 +89,8 @@ class Entry_helper:
     def delete_entry_by_id(self,id):
         wd = self.app.wd
         self.open_the_entry_list()
-        # select first entry
         self.select_entry_by_id(id)
-        # submit deletion
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
-        time.sleep(3)
         self.entry_cache = None
 
     def edit_first_entry(self, new_entry_data):
@@ -104,8 +101,9 @@ class Entry_helper:
         wd = self.app.wd
         self.open_the_entry_list()
         # select first entry
-        self.select_entry_by_id(id)
-        wd.find_element(By.XPATH, "// img[ @ alt = 'Edit']").click()
+        #self.select_entry_by_id(id)
+        #wd.find_element(By.XPATH, "// img[ @ alt = 'Edit']").click()
+        wd.find_element(By.CSS_SELECTOR, "a[href='edit.php?id=%s" % id).click()
         self.fill_entry_form(new_entry_data)
         wd.find_element('name', "update").click()
         self.return_to_the_entry_list()
