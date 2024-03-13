@@ -41,7 +41,7 @@ def test_random_entry_on_home_page(app):
     assert entry_from_home_page.address == entry_from_edit_page.address
     assert entry_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(entry_from_edit_page)
 
-#сравниваем все контакты с главной странице с контактами в базе
+#сравниваем все контакты с главной страницы с контактами в базе
 def test_compare_all_entries_on_home_page_with_db(app, db):
     entries_home = sorted(app.entry.get_entry_list(), key=Entry.id_or_max)
     entries_db = sorted(db.get_entry_list(), key=Entry.id_or_max)

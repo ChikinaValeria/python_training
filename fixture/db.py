@@ -42,5 +42,43 @@ class DbFixture:
             cursor.close()
         return list
 
+    def get_entry_in_group(self, group):
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute(
+                "select id from address_in_groups where group_id = group.id")
 
+
+        finally:
+            cursor.close()
+        return str(id)
+
+    def get_entries_in_group(self, id):
+        list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute(
+                "select id from address_in_groups where group_id = id")
+            for row in cursor:
+                (id) = row
+                list.append(Entry(id=str(id)))
+                print(list)
+        finally:
+            cursor.close()
+        return list
+
+
+    """def get_entries_in_group(self, id):
+        list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute(
+                "select id from address_in_groups where group_id = id")
+            for row in cursor:
+                id = row
+                list.append(id)
+                print(list)
+        finally:
+            cursor.close()
+        return list"""
 

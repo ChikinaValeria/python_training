@@ -97,6 +97,13 @@ class Entry_helper:
         wd = self.app.wd
         self.edit_entry_by_index(0)
 
+    def add_into_group(self, text):
+        wd = self.app.wd
+        wd.find_element('name', "to_group").click()
+        Select(wd.find_element('name', "to_group")).select_by_visible_text(text)
+        wd.find_element('name', "add").click()
+
+
     def edit_entry_by_id(self, id, new_entry_data):
         wd = self.app.wd
         self.open_the_entry_list()
