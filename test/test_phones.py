@@ -1,5 +1,6 @@
 import re
 import random
+from model.entry import Entry
 
 
 """def test_phones_on_home_page(app):
@@ -39,6 +40,24 @@ def test_random_entry_on_home_page(app):
     assert entry_from_home_page.lastname == entry_from_edit_page.lastname
     assert entry_from_home_page.address == entry_from_edit_page.address
     assert entry_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(entry_from_edit_page)
+
+#сравниваем все контакты с главной странице с контактами в базе
+def test_compare_all_entries_on_home_page_with_db(app, db):
+    entries_home = sorted(app.entry.get_entry_list(), key=Entry.id_or_max)
+    entries_db = sorted(db.get_entry_list(), key=Entry.id_or_max)
+    assert entries_home == entries_db
+    #print("Entry_home!!!:", entries_home)
+    #print("Entry_db!!!:", entries_db)
+
+    for i in range(len(entries_home)):
+        assert entries_home[i].all_phones_from_home_page == merge_phones_like_on_home_page(entries_db[i])
+        #print(f'Entry_home_allphines!!! #{i} {entries_home[i].all_phones_from_home_page}')
+        #print(f'Entry_db_allphones!!! #{i} {merge_phones_like_on_home_page(entries_db[i])}')
+        assert entries_home[i].all_emails_from_home_page == merge_emails_like_on_home_page(entries_db[i])
+        #print(f'Entry_home_allphines!!! #{i} {entries_home[i].all_emails_from_home_page}')
+        #print(f'Entry_db_allphones!!! #{i} {merge_emails_like_on_home_page(entries_db[i])}')
+
+
 
 
 def merge_phones_like_on_home_page(entry):

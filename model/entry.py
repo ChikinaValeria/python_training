@@ -31,7 +31,9 @@ class Entry:
                                                   self.all_phones_from_home_page, self.all_emails_from_home_page)
 
     def __eq__(self, other):
-        return self.firstname == other.firstname and self.lastname == other.lastname and (self.id is None or other.id is None or self.id == other.id)
+        return (self.firstname == other.firstname and self.lastname == other.lastname and
+                (self.id is None or other.id is None or self.id == other.id)
+                and self.address == other.address)
 
     def id_or_max(self):
         if self.id:
