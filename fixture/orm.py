@@ -21,6 +21,13 @@ class ORMFixture:
         id = PrimaryKey(int, column = 'id')
         firstname = Optional(str, column = 'firstname')
         lastname = Optional(str, column = 'lastname')
+        address = Optional(str, column='address')
+        home = Optional(str, column='home')
+        work = Optional(str, column='work')
+        mobile = Optional(str, column='mobile')
+        email = Optional(str, column='email')
+        email2 = Optional(str, column='email2')
+        email3 = Optional(str, column='email3')
         #deprecated = Optional(datetime, column = 'deprecated')
         groups= Set(lambda: ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="entries", lazy=True)
 
@@ -46,7 +53,10 @@ class ORMFixture:
 
     def convert_entries_to_model(self, entries):
         def convert(entry):
-            return Entry(id=str(entry.id), firstname=entry.firstname, lastname=entry.lastname)
+            return Entry(id=str(entry.id), firstname=entry.firstname, lastname=entry.lastname, address=entry.address,
+                         home=entry.home, work=entry.work, mobile=entry.mobile,
+                         email=entry.email, email2=entry.email2, email3=entry.email3
+                         )
         return list(map(convert, entries))
 
 

@@ -134,4 +134,15 @@ class Group_helper:
         #print(self.group_cache)
         return list(self.group_cache)
 
+    def get_id_by_name(self, name):
+        wd = self.app.wd
+        self.open_groups_page()
+        for element in wd.find_elements(By.CSS_SELECTOR, "span.group"):
+            text = element.text
+            if text == name:
+                id = element.find_element('name', "selected[]").get_attribute("value")
+
+        return id
+
+
 

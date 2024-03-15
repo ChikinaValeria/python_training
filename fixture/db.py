@@ -42,11 +42,11 @@ class DbFixture:
             cursor.close()
         return list
 
-    def get_entry_in_group(self, group):
+    def get_entry_in_group(self, chosen_group_id):
         cursor = self.connection.cursor()
         try:
             cursor.execute(
-                "select id from address_in_groups where group_id = group.id")
+                "select id from address_in_groups where group_id = chosen_group_id")
 
 
         finally:

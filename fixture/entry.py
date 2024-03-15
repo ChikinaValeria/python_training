@@ -220,3 +220,20 @@ class Entry_helper:
         work = re.search("W: (.*)", text).group(1).replace(' ', '')
         return Entry(home=home, mobile=mobile, work=work)
 
+
+
+    def add_entry_into_group(self, id, group_name):
+        self.open_the_entry_list()
+        self.select_entry_by_id(id)
+        self.add_into_group(group_name)
+
+    def get_id_by_name(self, name):
+        wd = self.app.wd
+        self.open_the_entry_list()
+        for row in wd.find_elements('name', "entry"):
+            cells = row.find_elements(By.TAG_NAME, "td")
+            firstname = cells[2].text
+            if firstname == name:
+                id = cells[0].find_element(By.TAG_NAME, "input").get_attribute("value")
+
+        return id
