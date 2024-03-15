@@ -237,3 +237,13 @@ class Entry_helper:
                 id = cells[0].find_element(By.TAG_NAME, "input").get_attribute("value")
 
         return id
+
+    def delete_entry_from_group(self, id, group_name):
+        wd = self.app.wd
+        self.open_the_entry_list()
+        wd.find_element('name', "group").click()
+        Select(wd.find_element('name', "group")).select_by_visible_text(group_name)
+        self.select_entry_by_id(id)
+        wd.find_element('name', "remove").click()
+
+
