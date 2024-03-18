@@ -1,8 +1,6 @@
 from model.group import Group
 from model.entry import Entry
-import random
 from fixture.orm import ORMFixture
-from generator.group import random_string
 
 new_db = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
 
@@ -11,30 +9,8 @@ def test_add_entry_into_group(app, db):
         app.group.create(Group(name='test_group'))
     if len(db.get_entry_list()) == 0:
         app.entry.create(Entry(firstname='test_name'))
-    #ищем группу, в которую включены не все контакты
-    groups = db.get_group_list()
-    flag = False
-    for g in groups:
-        entries_out = new_db.get_entries_not_in_group(g)
-        if len(entries_out) != 0:
-            entry = random.choice(entries_out)
-            id = entry.id
-            selected_group = g
-            flag = True
-            break
-        else:
-            continue
-    #если после перебора всех групп подходящая группа все еще не выбрана,
-    #создаем новую группу и запоминаем ее
-    if flag == False:
-        name = random_string('test_group', 15)
-        selected_group = Group(name=name)
-        app.group.create(selected_group)
-        selected_group.id = app.group.get_id_by_name(name)
-        # выбираем случайный контакт и сохраняем ид
-        entries = db.get_entry_list()
-        entry = random.choice(entries)
-        id= entry.id
+    #находим подходящую существующую группу или создаем новую
+    entry, id, selected_group = app.group.find_or_create_group_not_containing_all_entries(db, new_db)
     #добавляем контакт в группу
     app.entry.add_entry_into_group(id, selected_group.name)
     assert entry in new_db.get_entries_in_group(selected_group)

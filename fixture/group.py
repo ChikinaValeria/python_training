@@ -1,5 +1,10 @@
 from selenium.webdriver.common.by import By
 from model.group import Group
+from generator.group import random_string
+import random
+
+
+
 
 class Group_helper:
 
@@ -137,12 +142,38 @@ class Group_helper:
     def get_id_by_name(self, name):
         wd = self.app.wd
         self.open_groups_page()
+        id = ''
         for element in wd.find_elements(By.CSS_SELECTOR, "span.group"):
             text = element.text
             if text == name:
                 id = element.find_element('name', "selected[]").get_attribute("value")
-
         return id
 
+        # ищем группу, в которую включены не все контакты
+    def find_or_create_group_not_containing_all_entries(self, db, ORMFixture):
+        groups = db.get_group_list()
+        flag = False
+        for g in groups:
+            entries_out = ORMFixture.get_entries_not_in_group(g)
+            if len(entries_out) != 0:
+                entry = random.choice(entries_out)
+                id = entry.id
+                selected_group = g
+                flag = True
+                break
+            else:
+                continue
+            # если такая группа не найдена, создаем новую группу
+        if flag == False:
+            name = random_string('test_group', 15)
+            selected_group = Group(name=name)
+            self.create(selected_group)
+            selected_group.id = self.get_id_by_name(name)
+            # выбираем случайный контакт и сохраняем ид
+            entries = db.get_entry_list()
+            entry = random.choice(entries)
+            id = entry.id
+
+        return entry, id, selected_group
 
 
