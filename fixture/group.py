@@ -173,7 +173,32 @@ class Group_helper:
             entries = db.get_entry_list()
             entry = random.choice(entries)
             id = entry.id
-
         return entry, id, selected_group
 
 
+    def find_or_create_group_with_atleast_one_contact(self, db, ORMFixture, app):
+        groups = db.get_group_list()
+        flag = False
+        for g in groups:
+            entries_in = ORMFixture.get_entries_in_group(g)
+            if len(entries_in) != 0:
+                entry = random.choice(entries_in)
+                id = entry.id
+                selected_group = g
+                flag = True
+                break
+            else:
+                continue
+        # если после перебора всех групп подходящая группа все еще не выбрана,
+        # выбираем случайную группу, сохраняем имя
+        if flag == False:
+            groups = self.get_group_list()
+            selected_group = random.choice(groups)
+            group_name = selected_group.name
+            # выбираем случайный контакт
+            entries = db.get_entry_list()
+            entry = random.choice(entries)
+            id = entry.id
+            # добавляем случайный контакт в новую группу
+            app.entry.add_entry_into_group(id, group_name)
+        return id, entry, selected_group
