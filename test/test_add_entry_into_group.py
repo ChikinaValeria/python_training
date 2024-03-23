@@ -12,7 +12,7 @@ def test_add_entry_into_group(app, db):
     #находим подходящую существующую группу или создаем новую
     entry, id, selected_group = app.group.find_or_create_group_not_containing_all_entries(db, new_db)
     #добавляем контакт в группу
-    app.entry.add_entry_into_group(id, selected_group.name)
+    app.entry.add_entry_into_group(id, selected_group.id)
     assert entry in new_db.get_entries_in_group(selected_group)
 
 

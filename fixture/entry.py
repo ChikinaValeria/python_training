@@ -97,10 +97,10 @@ class Entry_helper:
         wd = self.app.wd
         self.edit_entry_by_index(0)
 
-    def add_into_group(self, text):
+    def add_into_group(self, group_id):
         wd = self.app.wd
         wd.find_element('name', "to_group").click()
-        Select(wd.find_element('name', "to_group")).select_by_visible_text(text)
+        wd.find_element(By.XPATH, "//select[@name='to_group']//option[@value='%s']" % group_id).click()
         wd.find_element('name', "add").click()
 
 
@@ -222,10 +222,10 @@ class Entry_helper:
 
 
 
-    def add_entry_into_group(self, id, group_name):
+    def add_entry_into_group(self, id, group_id):
         self.open_the_entry_list()
         self.select_entry_by_id(id)
-        self.add_into_group(group_name)
+        self.add_into_group(group_id)
 
     def get_id_by_name(self, name):
         wd = self.app.wd
@@ -238,12 +238,14 @@ class Entry_helper:
 
         return id
 
-    def delete_entry_from_group(self, id, group_name):
+    def delete_entry_from_group(self, id, group_id):
         wd = self.app.wd
         self.open_the_entry_list()
         wd.find_element('name', "group").click()
-        Select(wd.find_element('name', "group")).select_by_visible_text(group_name)
+        wd.find_element(By.XPATH, "//select[@name='group']//option[@value='%s']" % group_id).click()
         self.select_entry_by_id(id)
         wd.find_element('name', "remove").click()
+
+
 
 

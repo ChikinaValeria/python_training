@@ -16,6 +16,6 @@ def test_delete_entry_from_group(app, db):
     # ищем группу, в которую включен хотя бы один контакт или создаем такую
     id, entry, selected_group = app.group.find_or_create_group_with_atleast_one_contact(db, new_db, app)
     #удаляем контакт из группы
-    app.entry.delete_entry_from_group(id, selected_group.name)
+    app.entry.delete_entry_from_group(id, selected_group.id)
     assert entry not in new_db.get_entries_in_group(selected_group)
 

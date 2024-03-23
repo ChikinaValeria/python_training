@@ -194,11 +194,11 @@ class Group_helper:
         if flag == False:
             groups = self.get_group_list()
             selected_group = random.choice(groups)
-            group_name = selected_group.name
+            group_id = selected_group.id
             # выбираем случайный контакт
             entries = db.get_entry_list()
             entry = random.choice(entries)
             id = entry.id
             # добавляем случайный контакт в новую группу
-            app.entry.add_entry_into_group(id, group_name)
+            app.entry.add_entry_into_group(id, group_id)
         return id, entry, selected_group
