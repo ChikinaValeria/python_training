@@ -1,0 +1,5 @@
+pytest
+selenium
+pony
+pymysql
+mysql-connector-python-rf
